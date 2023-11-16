@@ -2,29 +2,29 @@
   "name": "POD #1 Project F2023",
   "version": "0.1.0",
   "description": "Keeping track of applied jobs.",
-  "permissions": [],
-  "host_permissions": [],
+  "permissions": ["activeTab", "storage", "tabs"],
+  "host_permissions": ["https://*.linkedin.com/*"],
   "background": {
-    "service_worker": ""
+    "service_worker": "src/background.js"
   },
   "content_scripts": [
     {
-      "matches": [],
-      "js": []
+      "matches": ["https://*.linkedin.com/*"],
+      "js": ["src/contentScript.js"]
     }
   ],
   "web_accessible_resources": [
     {
       "resources": [
+        "resources/images/badge_verified.png"
+
       ],
-      "matches": []
+      "matches": ["<all_urls>"]
     }
   ],
   "action": {
     "default_icon": {
-      "16": "resources/images/icon.png",
-      "24": "resources/images/icon.png",
-      "32": "resources/images/icon.png"
+
     },
     "default_title": "POD #1 Project F2023",
     "default_popup": "docs/popup.html"
