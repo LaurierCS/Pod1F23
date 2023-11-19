@@ -7,24 +7,29 @@
   "background": {
     "service_worker": "src/background.js"
   },
-  "content_scripts": [
-    {
-      "matches": ["https://*.linkedin.com/*"],
-      "js": ["src/contentScript.js"]
-    }
-  ],
-  "web_accessible_resources": [
-    {
-      "resources": [
-        "resources/images/badge_verified.png"
+  "content_scripts": [{
+    "matches": ["https://*.linkedin.com/*"],
+    "js": ["src/contentScript.js"]
+  }],
+  "web_accessible_resources": [{
+    "resources": [
+      "resources/images/badge_verified.png"
 
-      ],
-      "matches": ["<all_urls>"]
-    }
-  ],
+    ],
+    "matches": ["<all_urls>"]
+  }],
+  "icons": {
+    "16": "resources/images/icons/icon16.png",
+    "32": "resources/images/icons/icon32.png",
+    "48": "resources/images/icons/icon48.png",
+    "128": "resources/images/icons/icon128.png"
+  },
   "action": {
     "default_icon": {
-
+      "16": "resources/images/icons/icon16.png",
+      "32": "resources/images/icons/icon32.png",
+      "48": "resources/images/icons/icon48.png",
+      "128": "resources/images/icons/icon128.png"
     },
     "default_title": "POD #1 Project F2023",
     "default_popup": "docs/popup.html"
