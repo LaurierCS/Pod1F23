@@ -122,7 +122,6 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 ## Contact
 
 Brandon Niles - [LinkedIn](https://www.linkedin.com/in/brandonnniles/) - brandonniles00@gmail.com
-Thu Mai - [LinkedIn](https://www.linkedin.com/in/mnathuw/) - mnathu98@gmail.com
 ** ADD YOUR INFORMATION HERE
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
