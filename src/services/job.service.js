@@ -1,72 +1,94 @@
 /** @private */
 const JOBS_KEY = "jobs";
 
-/** Shared Logic */ 
+/** Shared Logic */
 class JobService {
-  /**
-   *
-   * @returns {Promise<Array>}
-   */
-  static getJobs = function () {
-    const promise = toPromise(function (resolve, reject) {
-      chrome.storage.local.get([JOBS_KEY], (result) => {
-        if (chrome.runtime.lastError) {
-          reject(chrome.runtime.lastError);
+    /**
+     *
+     * @returns {Promise<Array>}
+     */
+    static getJobs = function () {
+        const promise = toPromise(function (resolve, reject) {
+            chrome.storage.local.get([JOBS_KEY], (result) => {
+                if (chrome.runtime.lastError) {
+                    reject(chrome.runtime.lastError);
+                }
+
+                const jobs = result.jobs ?? [];
+                resolve(jobs);
+            });
+        });
+
+        return promise;
+    };
+
+    /**
+     *
+     * @param {String} positionName
+     * @param {String} companyName
+     * @param {String} appliedDate
+     * @returns {Promise<Array>}
+     */
+    static setJob = async function (positionName, companyName, appliedDate) {
+        const jobs = await this.getJobs();
+        
+        // make sure that there is no repetition
+        // if there is no duplicate, update the job
+        let noDuplicate = true;
+        for (let job of jobs) {
+            let jobPositionName = job.positionName;
+            let jobCompanyName = job.companyName;
+            let jobAppliedDate = job.appliedDate; // compare the job applied date
+
+            if (jobPositionName === positionName && jobCompanyName === companyName) {
+                noDuplicate = false;
+            }
         }
 
-        const jobs = result.jobs ?? [];
-        resolve(jobs);
-      });
-    });
+        let updatedJobs = null;
 
-    return promise;
-  };
-
-
-  /**
-   *
-   * @param {String} positionName
-   * @param {String} companyName
-   * @param {String} appliedDate
-   * @returns {Promise<Array>}
-   */
-  static setJob = async function (positionName, companyName, appliedDate) {
-    const jobs = await this.getJobs();
-    const updatedJobs = [
-      ...jobs,
-      {
-        positionName,
-        companyName,
-        appliedDate
-      },
-    ];
-
-    const promise = toPromise(function (resolve, reject) {
-      chrome.storage.local.set({ [JOBS_KEY]: updatedJobs }, () => {
-        if (chrome.runtime.lastError) {
-          reject(chrome.runtime.lastError);
+        if (noDuplicate) {
+            updatedJobs = [
+                ...jobs,
+                {
+                    positionName,
+                    companyName,
+                    appliedDate,
+                },
+            ];
+        } else {
+            updatedJobs = [
+                ...jobs,
+            ];
         }
+        
 
-        resolve(updatedJobs);
-      });
-    });
+        const promise = toPromise(function (resolve, reject) {
+            chrome.storage.local.set({ [JOBS_KEY]: updatedJobs }, () => {
+                if (chrome.runtime.lastError) {
+                    reject(chrome.runtime.lastError);
+                }
 
-    return promise;
-  };
+                resolve(updatedJobs);
+            });
+        });
 
-  static removeJobs = function() {
-    const promise = toPromise(function (resolve, reject) {
-      chrome.storage.local.remove([JOBS_KEY], () => {
-        if (chrome.runtime.lastError) {
-          reject(chrome.runtime.lastError);
-        }
+        return promise;
+    };
 
-        resolve();
-      });
-    });
+    static removeJobs = function () {
+        const promise = toPromise(function (resolve, reject) {
+            chrome.storage.local.remove([JOBS_KEY], () => {
+                if (chrome.runtime.lastError) {
+                    reject(chrome.runtime.lastError);
+                }
 
-    return promise;
-  }
+                resolve();
+            });
+        });
+
+        return promise;
+    };
 }
 
 /**
@@ -76,14 +98,14 @@ class JobService {
  */
 
 const toPromise = function (callback) {
-  const promise = new Promise(function (resolve, reject) {
-    try {
-      callback(resolve, reject);
-    } catch (error) {
-      reject(error);
-    }
-  });
-  return promise;
+    const promise = new Promise(function (resolve, reject) {
+        try {
+            callback(resolve, reject);
+        } catch (error) {
+            reject(error);
+        }
+    });
+    return promise;
 };
 
-export { JobService }
+export { JobService };
