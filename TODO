@@ -1,0 +1,5 @@
+Todo:
+  ☐ Refactor the functions
+  ✔ Include the fake data as a json form, and put it into the data folder @started(23-11-18 23:29) @done(23-11-18 23:29) @lasted(33s)
+  ☐ Implement the service with the listeners
+  ✔ Using npm instead of pnpm? (bruh, i forgot to import the webpack into package.json :L) @done(23-11-19 23:21)

@@ -2,7 +2,7 @@
 const JOBS_KEY = "jobs";
 
 /** Shared Logic */ 
-export class JobService {
+class JobService {
   /**
    *
    * @returns {Promise<Array>}
@@ -22,6 +22,7 @@ export class JobService {
     return promise;
   };
 
+
   /**
    *
    * @param {String} positionName
@@ -30,7 +31,6 @@ export class JobService {
    * @returns {Promise<Array>}
    */
   static setJob = async function (positionName, companyName, appliedDate) {
-
     const jobs = await this.getJobs();
     const updatedJobs = [
       ...jobs,
@@ -41,7 +41,6 @@ export class JobService {
       },
     ];
 
-    // set the jobs array back to chrome storage
     const promise = toPromise(function (resolve, reject) {
       chrome.storage.local.set({ [JOBS_KEY]: updatedJobs }, () => {
         if (chrome.runtime.lastError) {
@@ -86,3 +85,5 @@ const toPromise = function (callback) {
   });
   return promise;
 };
+
+export { JobService }
