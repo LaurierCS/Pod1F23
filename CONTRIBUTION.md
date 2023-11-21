@@ -5,13 +5,10 @@ To get an overview of the project, read the README file. Here is the list of too
 - [Install PNPM](https://pnpm.io/installation)
 - [Install Webpack](https://webpack.js.org/guides/getting-started/)
 
-To build the project, you can go to terminal and type:
 
-0. pnpm install
-1. pnpm run build
+To build the project, you can go to terminal and type: ```pnpm install``` -> ```pnpm run build```
 
-Note on installing the right folder for extension
-- select on the output folder (the build folder)
+Please load unpacked the output folder, instead of src folder!
 
 ## Getting Started
 
@@ -59,7 +56,33 @@ PODS1
 
 ## Note on Webpack configuration
 
+
 Webpack is a popular JavaScript module bundler. Webpack is commonly used to bundle and manage dependencies in web development projects. Let's break down the key parts of this webpack configuration file:
+
+```
+const path = require("path");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
+
+module.exports = {
+  entry: {
+    popup: "./src/popup.js",
+    serviceWorker: "./src/serviceWorker.js",
+    contentScript: "./src/contentScript.js",
+  },
+  output: {
+    filename: "[name].js",
+    path: path.resolve(__dirname, "output"),
+  },
+  watch: true,
+  plugins: [
+    new CopyWebpackPlugin({
+      patterns: [{ from: "static" }],
+    }),
+  ],
+  mode: "development",
+  devtool: "inline-source-map"
+};
+```
 
 1. Entry Points:
 
