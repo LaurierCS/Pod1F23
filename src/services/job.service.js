@@ -1,3 +1,5 @@
+import { isDuplicate } from "../utils/isDuplicate";
+
 /** @private */
 const JOBS_KEY = "jobs";
 
@@ -14,7 +16,44 @@ class JobService {
                     reject(chrome.runtime.lastError);
                 }
 
-                const jobs = result.jobs ?? [];
+                let jobs = result.jobs ?? [];
+                resolve(jobs);
+            });
+        });
+
+        return promise;
+    };
+
+    /**
+     *
+     * @param {Array} jobArray
+     * @returns {Promise<Array>}
+     */
+    static setJobs = async function (jobArray) {
+        let jobs = await this.getJobs();
+        console.log("job in storage before: ", jobs);
+        console.log("job in upcoming array: ", jobArray);
+        console.log("jobs length: ", jobs.length);
+        if (jobs.length !== 0) {
+            for (let newJob of jobArray) {
+                let duplicate = isDuplicate(jobs, newJob);
+
+                if (!duplicate) {
+                    jobs = [...jobs, newJob];
+                }
+            }
+        } else {
+            jobs = [...jobArray];
+        }
+
+        console.log("job in storage after: ", jobs);
+
+        const promise = toPromise(function (resolve, reject) {
+            chrome.storage.local.set({ [JOBS_KEY]: jobs }, () => {
+                if (chrome.runtime.lastError) {
+                    reject(chrome.runtime.lastError);
+                }
+
                 resolve(jobs);
             });
         });
@@ -30,52 +69,36 @@ class JobService {
      * @returns {Promise<Array>}
      */
     static setJob = async function (positionName, companyName, appliedDate) {
-        const jobs = await this.getJobs();
-        
-        // make sure that there is no repetition
-        // if there is no duplicate, update the job
-        let noDuplicate = true;
-        for (let job of jobs) {
-            let jobPositionName = job.positionName;
-            let jobCompanyName = job.companyName;
-            let jobAppliedDate = job.appliedDate; // compare the job applied date
+        const newJob = {
+            positionName,
+            companyName,
+            appliedDate,
+        };
 
-            if (jobPositionName === positionName && jobCompanyName === companyName) {
-                noDuplicate = false;
-            }
+        let jobs = await this.getJobs();
+        let duplicate = isDuplicate(jobs, newJob);
+
+        if (!duplicate) {
+            jobs = [...jobs, newJob];
         }
-
-        let updatedJobs = null;
-
-        if (noDuplicate) {
-            updatedJobs = [
-                ...jobs,
-                {
-                    positionName,
-                    companyName,
-                    appliedDate,
-                },
-            ];
-        } else {
-            updatedJobs = [
-                ...jobs,
-            ];
-        }
-        
 
         const promise = toPromise(function (resolve, reject) {
-            chrome.storage.local.set({ [JOBS_KEY]: updatedJobs }, () => {
+            chrome.storage.local.set({ [JOBS_KEY]: jobs }, () => {
                 if (chrome.runtime.lastError) {
                     reject(chrome.runtime.lastError);
                 }
 
-                resolve(updatedJobs);
+                resolve(jobs);
             });
         });
 
         return promise;
     };
 
+    /**
+     *
+     * @returns {Promise}
+     */
     static removeJobs = function () {
         const promise = toPromise(function (resolve, reject) {
             chrome.storage.local.remove([JOBS_KEY], () => {
@@ -96,7 +119,6 @@ class JobService {
  * @param {Function} callback
  * @returns {Promise}
  */
-
 const toPromise = function (callback) {
     const promise = new Promise(function (resolve, reject) {
         try {
