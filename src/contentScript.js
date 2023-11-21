@@ -1,55 +1,63 @@
-import { JobService } from "./services/job.service";
+import { getDataFromStorage } from "./services/Job";
+import { isDuplicate } from "./utils/isDuplicate";
 
-console.log(JobService);
+// checkmark component
+const CheckMark = () => {
+    const checkmark = document.createElement("img");
+    checkmark.src = chrome.runtime.getURL("/assets/badge_verified.png");
+    checkmark.className = "checkmark";
+    checkmark.width = 70;
+    checkmark.height = 70;
 
-const jobs = await JobService.getJobs();
-console.log("Jobs: ", jobs);
+    return checkmark;
+};
 
-// adding jobs here
+// getting jobs list from storage
+const jobs = await getDataFromStorage();
 
 const onNewElementLoaded = () => {
     const jobContainers = document.getElementsByClassName(
         "job-card-list__entity-lockup artdeco-entity-lockup artdeco-entity-lockup--size-4 ember-view"
     );
-    //company name, title
+
+    const getValue = (jobContainer, className) => {
+        const item = jobContainer.querySelector(className);
+        return item ? item.textContent.trim() : "";
+    };
+
     for (let i = 0; i < jobContainers.length; i++) {
         const cardContainer = jobContainers[i];
-        // Job title
-        const jobTitleContainer = cardContainer.querySelector(
+        const positionName = getValue(
+            cardContainer,
             "a.job-card-container__link"
         );
-        const jobCompanyNameContainer = cardContainer.querySelector(
+        const companyName = getValue(
+            cardContainer,
             "span.job-card-container__primary-description"
         );
+        const newJob = {
+            positionName,
+            companyName,
+        };
+        const hasAppliedToTheJob = isDuplicate(jobs, newJob);
 
-        if (jobTitleContainer && jobCompanyNameContainer) {
-            const positionNameFromCard = jobTitleContainer.textContent.trim();
-            const companyNameFromCard =
-                jobCompanyNameContainer.textContent.trim();
+        if (hasAppliedToTheJob) {
+            const hasTag =
+                cardContainer.hasAttribute("applied") &&
+                cardContainer.hasAttribute("addTag");
 
-            // const applied = jobs.some(({ positionName, companyName }) => {
-            //   return (
-            //     positionName === positionNameFromCard &&
-            //     companyName === companyNameFromCard
-            //   );
-            // });
-
-            // if (applied) {
-            //   console.log(
-            //     `you have applied for ${positionNameFromCard} in ${companyNameFromCard}`
-            //   );
-            // }
+            if (!hasTag) {
+                cardContainer.setAttribute("applied", "true");
+                cardContainer.setAttribute("addTag", "false");
+            }
         }
 
-        const exists = document.getElementsByClassName("checkmark")[i];
-        if (!exists) {
-            const checkmark = document.createElement("img");
-            checkmark.src = chrome.runtime.getURL("/assets/badge_verified.png");
-            checkmark.className = "checkmark";
-            checkmark.width = 70;
-            checkmark.height = 70;
-
-            jobContainers[i].appendChild(checkmark);
+        if (
+            cardContainer.getAttribute("applied") === "true" &&
+            cardContainer.getAttribute("addTag") === "false"
+        ) {
+            cardContainer.appendChild(CheckMark());
+            cardContainer.setAttribute("addTag", "true");
         }
     }
 };
