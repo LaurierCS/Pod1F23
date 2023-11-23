@@ -1,0 +1,12 @@
+body {
+  min-width: 800px;
+  max-width: 100%;
+  position: relative;
+  vertical-align: middle;
+}
+
+table,
+th,
+td {
+  border: 1px solid black;
+}

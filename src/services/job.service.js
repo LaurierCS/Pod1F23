@@ -1,7 +1,7 @@
 /** @private */
 const JOBS_KEY = "jobs";
 
-/** Shared Logic */ 
+/** Shared Logic */
 export class JobService {
   /**
    *
@@ -14,7 +14,6 @@ export class JobService {
           reject(chrome.runtime.lastError);
         }
 
-        const jobs = result.jobs ?? [];
         resolve(jobs);
       });
     });
@@ -43,7 +42,9 @@ export class JobService {
 
     // set the jobs array back to chrome storage
     const promise = toPromise(function (resolve, reject) {
-      chrome.storage.local.set({ [JOBS_KEY]: updatedJobs }, () => {
+      chrome.storage.local.set({
+        [JOBS_KEY]: updatedJobs
+      }, () => {
         if (chrome.runtime.lastError) {
           reject(chrome.runtime.lastError);
         }
@@ -55,7 +56,7 @@ export class JobService {
     return promise;
   };
 
-  static removeJobs = function() {
+  static removeJobs = function () {
     const promise = toPromise(function (resolve, reject) {
       chrome.storage.local.remove([JOBS_KEY], () => {
         if (chrome.runtime.lastError) {
