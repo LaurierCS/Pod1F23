@@ -15,7 +15,11 @@
     ],
     "web_accessible_resources": [
       {
-        "resources": ["/assets/badge_verified.png"],
+        "resources": [
+            "/assets/*.png",
+            "/data/*.json",
+            "/contentScript.js"
+        ],
         "matches": ["https://*.linkedin.com/*"]
       }
     ],
