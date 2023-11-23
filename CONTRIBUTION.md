@@ -5,8 +5,8 @@ To get an overview of the project, read the README file. Here is the list of too
 - [Install PNPM](https://pnpm.io/installation)
 - [Install Webpack](https://webpack.js.org/guides/getting-started/)
 
+> **_NOTE:_** You have to generate the output folder, and use it to unpack as chrome extension. To build the project, you can go to terminal and type: ```pnpm install``` -> ```pnpm run build```
 
-To build the project, you can go to terminal and type: ```pnpm install``` -> ```pnpm run build```
 
 Please load unpacked the output folder, instead of src folder!
 
