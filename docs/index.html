@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/stylesheets/styles.css">
+  <script type="module" src="/src/popup.js"></script>
+  <title>Job Tracker</title>
+  <!-- Include your extension's stylesheets or additional styles here -->
+</head>
+
+<body>
+  <div class="bookmarks" id="bookmarks"></div>
+  <table>
+    <thead>
+      <tr>
+        <th>Job Title</th>
+        <th>Company Name</th>
+        <th>Label</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Job information will be dynamically inserted here -->
+      <tr>
+        <td>E.g, Software Engineer</td>
+        <td>E.g, ABC Company</td>
+        <td id="jobTableBody">
+          <div class="form-group">
+            <select class="form-control">
+              <option value="option">-Choose an option-</option>
+              <option value="wishlist">💕Wishlist</option>
+              <option value="applied">☑️Applied</option>
+              <option value="interview">✔️Interview</option>
+              <option value="offer">💲Offer</option>
+              <option value="rejected">❌Rejected</a></option>
+            </select>
+          </div>
+      </tr>
+    </tbody>
+  </table>
+</body>
+
+</html>

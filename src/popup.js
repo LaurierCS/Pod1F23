@@ -33,7 +33,6 @@ const addNewBookmark = (bookmarksElement, bookmark) => {
   // Create control element
   const controlElement = document.createElement("td");
   controlElement.className = "bookmark-controls";
-  setBookmarkAttributes("play", onPlay, controlElement);
 
   table.appendChild(jobTitleElement);
   table.appendChild(companyNameElement);
@@ -80,7 +79,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const urlParameters = new URLSearchParams(queryParameters);
   //Extract the video ID from the URL
   const currentJob = urlParameters.get("currentJobId");
-  //Check if it's a YouTube video page:
+  //Check if it's a Linkedin job post page:
   if (activeTab.url.includes("linkedin.com/jobs/collections/recommended/") && currentJob) {
     //Fetch and display bookmarks
     chrome.storage.sync.get([currentJob], (data) => {

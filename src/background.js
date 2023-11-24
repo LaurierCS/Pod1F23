@@ -1,7 +1,7 @@
 chrome.tabs.onUpdated.addListener((tabId, tab) => {
   // This event listener is triggered whenever a tab is updated.
   if (tab.url && tab.url.includes("linkedin.com/jobs/collections/recommended/")) {
-    // Check if the updated tab has a URL and if the URL contains "youtube.com/watch".
+    // Check if the updated tab has a URL and if the URL contains "linkedin.com/jobs/collections/recommended/".
     const queryParameters = tab.url.split("?")[1];
     // Extract the query parameters from the URL.
     const urlParameters = new URLSearchParams(queryParameters);
