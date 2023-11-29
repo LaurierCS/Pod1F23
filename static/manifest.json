@@ -3,24 +3,20 @@
     "version": "0.1.0",
     "description": "Keeping track of applied jobs.",
     "permissions": ["activeTab", "storage", "tabs"],
-    "host_permissions": ["https://*.linkedin.com/*"],
+    "host_permissions": ["https://*.linkedin.com/*", "https://ca.indeed.com/*"],
     "background": {
       "service_worker": "serviceWorker.js"
     },
     "content_scripts": [
       {
-        "matches": ["https://*.linkedin.com/*"],
+        "matches": ["https://*.linkedin.com/*", "https://ca.indeed.com/*"],
         "js": ["contentScript.js"]
       }
     ],
     "web_accessible_resources": [
       {
-        "resources": [
-            "/assets/*.png",
-            "/data/*.json",
-            "/contentScript.js"
-        ],
-        "matches": ["https://*.linkedin.com/*"]
+        "resources": ["/assets/badge_verified.png"],
+        "matches": ["https://*.linkedin.com/*", "https://ca.indeed.com/*"]
       }
     ],
     "action": {
