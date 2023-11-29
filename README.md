@@ -125,6 +125,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 - Brandon Niles - [LinkedIn](https://www.linkedin.com/in/brandonnniles/) - brandonniles00@gmail.com 
 - Chee Kian Teoh - [LinkedIn](https://www.linkedin.com/in/cheekianteoh/) - teoh4770@mylaurier.ca
+- Reid Harrington - [LinkedIn](https://www.linkedin.com/in/Reid-Harrington/) - Reidmh110@gmail.com
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
