@@ -1,0 +1,13 @@
+Todo:
+  ☐ Refactor the functions
+  ✔ make sure that there is no repetition while getting a job, if there is no duplicate, update the job @done(23-11-20 07:40)
+  ✔ Include the fake data as a json form, and put it into the data folder @started(23-11-18 23:29) @done(23-11-18 23:29) @lasted(33s)
+  ✘ Implement the service with the listeners @cancelled(23-11-20 16:51)
+  ✔ Using npm instead of pnpm? (bruh, i forgot to import the webpack into package.json :L) @done(23-11-19 23:21)
+  ✔ Create a dummy data to test the storage service logic @started(23-11-20 07:16) @done(23-11-20 15:43) @lasted(8h27m21s)
+  ✔ Refactor the listeners function(can be better) @done(23-11-20 18:58)
+  ✘ Use the getter method to try matching with the items on the webpage @cancelled(23-11-20 16:51)
+  ✘ Add a listener for listen to storage changes? (maybe no need) @cancelled(23-11-20 16:50)
+  ✔ Add a setter method in job service to include the job array @done(23-11-20 15:12)
+  ✔ Test the setter method @done(23-11-20 16:38) 
+  ✔ Explaning the folder structure of the project @done(23-11-20 22:39)

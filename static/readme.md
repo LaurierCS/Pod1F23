@@ -1,0 +1,1 @@
+contains static files (html, css, manifest.json, assets) here
